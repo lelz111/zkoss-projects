@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?page title="User Management" contentType="text/html;charset=UTF-8"?>
+<zk xmlns="http://www.zkoss.org/2005/zul"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ca="client/attribute"
+    xmlns:cm="client/method"
+    xmlns:c="http://www.zkoss.org/2005/zk/client"
+    xmlns:bind="http://www.zkoss.org/2005/zk/bind">
+
+    <window viewModel="@id('vm') @init('com.zkos.helloworld.UserManagementViewModel')">
+        <vlayout width="700px" style="margin: 20px auto;">
+            <groupbox mold="3d" width="100%">
+                <caption label="@load(vm.editMode ? 'Edit User' : 'Add User')"/>
+                <grid width="100%">
+                    <columns>
+                        <column width="150px"/>
+                        <column/>
+                    </columns>
+                    <rows>
+                        <row>
+                            <label value="Username"/>
+                            <textbox value="@bind(vm.newUser.username)" width="100%"/>
+                        </row>
+                        <row>
+                            <label value="Password"/>
+                            <textbox type="password" value="@bind(vm.newUser.password)" width="100%"/>
+                        </row>
+                        <row>
+                            <label value="Image"/>
+                            <hbox>
+                                <button label="Upload" upload="true" onUpload="vm.uploadImage(event.media)"/>
+                                <image content="@load(vm.newUser.imageMedia)" width="60px" height="60px"/>
+                            </hbox>
+                        </row>
+                    </rows>
+                </grid>
+                <hbox pack="end" width="100%" style="margin-top:10px;">
+                    <button label="@load(vm.editMode ? 'Update' : 'Save')" onClick="@command('saveUser')" width="90px"/>
+                    <button label="Cancel" onClick="@command('cancelEdit')" visible="@load(vm.editMode)" width="90px"/>
+                </hbox>
+            </groupbox>
+
+            <separator/>
+
+            <groupbox mold="3d" width="100%">
+                <caption label="User List"/>
+                <listbox model="@load(vm.userList)" width="100%" emptyMessage="No users found.">
+                    <listhead>
+                        <listheader label="Username" width="30%"/>
+                        <listheader label="Password" width="30%"/>
+                        <listheader label="Image" width="20%"/>
+                        <listheader label="Action" width="20%"/>
+                    </listhead>
+                    <template name="model" var="user" status="stat">
+                        <listitem>
+                            <listcell label="@load(user.username)"/>
+                            <listcell label="@load(user.password)"/>
+                            <listcell>
+                                <image content="@load(user.imageMedia)" width="50px" height="50px"/>
+                            </listcell>
+                            <listcell>
+                                <hbox>
+                                    <button label="Edit" onClick="@command('editUser', user=user, index=stat.index)" width="60px"/>
+                                    <button label="Delete" onClick="@command('deleteUser', index=stat.index)" width="60px"/>
+                                </hbox>
+                            </listcell>
+                        </listitem>
+                    </template>
+                </listbox>
+            </groupbox>
+        </vlayout>
+    </window>
+</zk>
