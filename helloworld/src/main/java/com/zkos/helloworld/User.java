@@ -3,32 +3,52 @@ package com.zkos.helloworld;
 import org.zkoss.image.Image;
 
 public class User {
-    private String username;
-    private String password;
+    private String npk;
+    private String namaKaryawan;
+    private String posisi;
+    private String status;
     private Image imageMedia;
 
     public User() {}
 
-    public User(String username, String password, Image imageMedia) {
-        this.username = username;
-        this.password = password;
+    public User(String npk, String namaKaryawan, String posisi, String status, Image imageMedia) {
+        this.npk = npk;
+        this.namaKaryawan = namaKaryawan;
+        this.posisi = posisi;
+        this.status = status;
         this.imageMedia = imageMedia;
     }
 
-    public String getUsername() {
-        return username;
+    public String getNpk() {
+        return npk;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setNpk(String npk) {
+        this.npk = npk;
     }
 
-    public String getPassword() {
-        return password;
+    public String getNamaKaryawan() {
+        return namaKaryawan;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setNamaKaryawan(String namaKaryawan) {
+        this.namaKaryawan = namaKaryawan;
+    }
+
+    public String getPosisi() {
+        return posisi;
+    }
+
+    public void setPosisi(String posisi) {
+        this.posisi = posisi;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public Image getImageMedia() {

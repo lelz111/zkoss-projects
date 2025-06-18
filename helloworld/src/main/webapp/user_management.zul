@@ -1,14 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?page title="User Management" contentType="text/html;charset=UTF-8"?>
-<zk xmlns="http://www.zkoss.org/2005/zul"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:ca="client/attribute"
-    xmlns:cm="client/method"
-    xmlns:c="http://www.zkoss.org/2005/zk/client"
-    xmlns:bind="http://www.zkoss.org/2005/zk/bind">
+<zk xmlns="http://www.zkoss.org/2005/zul" xmlns:bind="http://www.zkoss.org/2005/zk/bind">
 
-    <window viewModel="@id('vm') @init('com.zkos.helloworld.UserManagementViewModel')">
-        <vlayout width="700px" style="margin: 20px auto;">
+    <window viewModel="@id('vm') @init('com.zkos.helloworld.UserManagementViewModel')" width="100%" border="normal">
+        <vlayout width="90%" style="margin: 20px auto;">
             <groupbox mold="3d" width="100%">
                 <caption label="@load(vm.editMode ? 'Edit User' : 'Add User')"/>
                 <grid width="100%">
@@ -18,19 +13,30 @@
                     </columns>
                     <rows>
                         <row>
-                            <label value="Username"/>
-                            <textbox value="@bind(vm.newUser.username)" width="100%"/>
+                            <label value="NPK"/>
+                            <textbox value="@bind(vm.newUser.npk)" width="100%"/>
                         </row>
                         <row>
-                            <label value="Password"/>
-                            <textbox type="password" value="@bind(vm.newUser.password)" width="100%"/>
+                            <label value="Nama Karyawan"/>
+                            <textbox value="@bind(vm.newUser.namaKaryawan)" width="100%"/>
+                        </row>
+                        <row>
+                            <label value="Posisi"/>
+                            <textbox value="@bind(vm.newUser.posisi)" width="100%"/>
+                        </row>
+                        <row>
+                            <label value="Status"/>
+                            <textbox value="@bind(vm.newUser.status)" width="100%"/>
                         </row>
                         <row>
                             <label value="Image"/>
-                            <hbox>
-                                <button label="Upload" upload="true" onUpload="vm.uploadImage(event.media)"/>
-                                <image content="@load(vm.newUser.imageMedia)" width="60px" height="60px"/>
-                            </hbox>
+                            <vbox spacing="5px">
+                                <hbox spacing="10px">
+                                    <button label="Upload" upload="true" onUpload="@command('uploadImage', media=event.media)"/>
+                                    <image content="@load(vm.newUser.imageMedia)" width="60px" height="60px"/>
+                                </hbox>
+                                <label value="@load(vm.uploadedFileName)" style="color:green;font-size:12px"/>
+                            </vbox>
                         </row>
                     </rows>
                 </grid>
@@ -44,22 +50,26 @@
 
             <groupbox mold="3d" width="100%">
                 <caption label="User List"/>
-                <listbox model="@load(vm.userList)" width="100%" emptyMessage="No users found.">
+                <listbox model="@load(vm.userList)" width="100%" emptyMessage="No users found." sizedByContent="true" style="table-layout: auto;">
                     <listhead>
-                        <listheader label="Username" width="30%"/>
-                        <listheader label="Password" width="30%"/>
-                        <listheader label="Image" width="20%"/>
-                        <listheader label="Action" width="20%"/>
+                        <listheader label="NPK" width="15%"/>
+                        <listheader label="Nama Karyawan" width="25%"/>
+                        <listheader label="Posisi" width="20%"/>
+                        <listheader label="Status" width="15%"/>
+                        <listheader label="Image" width="10%"/>
+                        <listheader label="Action" width="15%"/>
                     </listhead>
                     <template name="model" var="user" status="stat">
                         <listitem>
-                            <listcell label="@load(user.username)"/>
-                            <listcell label="@load(user.password)"/>
+                            <listcell label="@load(user.npk)"/>
+                            <listcell label="@load(user.namaKaryawan)"/>
+                            <listcell label="@load(user.posisi)"/>
+                            <listcell label="@load(user.status)"/>
                             <listcell>
                                 <image content="@load(user.imageMedia)" width="50px" height="50px"/>
                             </listcell>
                             <listcell>
-                                <hbox>
+                                <hbox spacing="5px">
                                     <button label="Edit" onClick="@command('editUser', user=user, index=stat.index)" width="60px"/>
                                     <button label="Delete" onClick="@command('deleteUser', index=stat.index)" width="60px"/>
                                 </hbox>
