@@ -1,58 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?page title="User Management" contentType="text/html;charset=UTF-8"?>
-<zk xmlns="http://www.zkoss.org/2005/zul" xmlns:bind="http://www.zkoss.org/2005/zk/bind">
-
-    <window viewModel="@id('vm') @init('com.zkos.helloworld.UserManagementViewModel')" width="100%" border="normal">
+<?page contentType="text/html;charset=UTF-8"?>
+<?init class="org.zkoss.zk.ui.util.Composition" arg0="layout.zul"?>
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <window id="mainWin" self="@define(content)" apply="com.zkos.helloworld.controller.UserManagementController" width="100%" border="normal">
         <vlayout width="1000px" style="margin: 20px auto;">
-            <!-- Form Input User -->
+
+            <!-- Form Input -->
             <groupbox mold="3d" width="100%">
-                <caption label="@load(vm.editMode ? 'Edit User' : 'Add User')"/>
+                <caption label="Form User"/>
                 <grid width="100%">
                     <columns>
                         <column width="150px"/>
                         <column/>
                     </columns>
                     <rows>
-                        <row>
-                            <label value="NPK"/>
-                            <textbox value="@bind(vm.newUser.npk)" width="100%"/>
-                        </row>
-                        <row>
-                            <label value="Nama Karyawan"/>
-                            <textbox value="@bind(vm.newUser.namaKaryawan)" width="100%"/>
-                        </row>
-                        <row>
-                            <label value="Posisi"/>
-                            <textbox value="@bind(vm.newUser.posisi)" width="100%"/>
-                        </row>
-                        <row>
-                            <label value="Status"/>
-                            <textbox value="@bind(vm.newUser.status)" width="100%"/>
-                        </row>
+                        <row><label value="NPK"/><textbox id="npkBox" width="100%"/></row>
+                        <row><label value="Nama Karyawan"/><textbox id="namaBox" width="100%"/></row>
+                        <row><label value="Posisi"/><textbox id="posisiBox" width="100%"/></row>
+                        <row><label value="Status"/><textbox id="statusBox" width="100%"/></row>
                         <row>
                             <label value="Image"/>
                             <vbox spacing="5px">
                                 <hbox spacing="10px">
-                                    <button label="Upload" upload="true" onUpload="@command('uploadImage', media=event.media)"/>
-                                    <image content="@load(vm.newUser.imageMedia)" width="60px" height="60px"/>
+                                    <button id="uploadBtn" label="Upload" upload="true"/>
+                                    <image id="userImage" width="60px" height="60px"/>
                                 </hbox>
-                                <label value="@load(vm.uploadedFileName)" style="color:green;font-size:12px"/>
+                                <label id="fileLabel" style="color:green;font-size:12px"/>
                             </vbox>
                         </row>
                     </rows>
                 </grid>
                 <hbox pack="end" width="100%" style="margin-top:10px;">
-                    <button label="@load(vm.editMode ? 'Update' : 'Save')" onClick="@command('saveUser')" width="90px"/>
-                    <button label="Cancel" onClick="@command('cancelEdit')" visible="@load(vm.editMode)" width="90px"/>
+                    <button id="saveBtn" label="Save" width="90px"/>
+                    <button id="cancelBtn" label="Cancel" visible="false" width="90px"/>
                 </hbox>
             </groupbox>
 
             <separator/>
-
-            <!-- Tabel User List -->
+            <!-- Search Box -->
+            <hbox width="100%" style="margin-bottom:10px;">
+                <label value="Search User:" />
+                <textbox id="searchBox" placeholder="Cari NPK / Nama / Posisi / Status" width="300px" />
+            </hbox>
+            <!-- Tabel User -->
             <groupbox mold="3d" width="100%">
                 <caption label="User List"/>
-                <listbox model="@load(vm.userList)" width="100%" emptyMessage="No users found."
+                <listbox id="userListbox" width="100%" emptyMessage="No users found."
                          style="table-layout: fixed; overflow-x: auto;">
                     <listhead>
                         <listheader label="NPK" width="15%"/>
@@ -60,25 +53,8 @@
                         <listheader label="Posisi" width="20%"/>
                         <listheader label="Status" width="15%"/>
                         <listheader label="Image" width="10%"/>
-                        <listheader label="Action" width="15%" style="min-width: 120px;"/>
+                        <listheader label="Action" width="15%"/>
                     </listhead>
-                    <template name="model" var="user" status="stat">
-                        <listitem>
-                            <listcell label="@load(user.npk)"/>
-                            <listcell label="@load(user.namaKaryawan)"/>
-                            <listcell label="@load(user.posisi)"/>
-                            <listcell label="@load(user.status)"/>
-                            <listcell>
-                                <image content="@load(user.imageMedia)" width="50px" height="50px"/>
-                            </listcell>
-                            <listcell>
-                                <hbox spacing="5px">
-                                    <button label="Edit" onClick="@command('editUser', user=user, index=stat.index)" width="60px"/>
-                                    <button label="Delete" onClick="@command('deleteUser', index=stat.index)" width="60px"/>
-                                </hbox>
-                            </listcell>
-                        </listitem>
-                    </template>
                 </listbox>
             </groupbox>
         </vlayout>

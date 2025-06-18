@@ -1,2 +1,5 @@
-com\zkos\helloworld\User.class
+com\zkos\helloworld\model\User.class
 com\zkos\helloworld\UserManagementViewModel.class
+com\zkos\helloworld\controller\UserManagementController.class
+com\zkos\helloworld\service\UserService.class
+com\zkos\helloworld\service\UserServiceImpl.class

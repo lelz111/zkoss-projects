@@ -1,7 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<?page title="Layout Template" contentType="text/html;charset=UTF-8"?>
-<zk xmlns="http://www.zkoss.org/2005/zul">
-
+<zk xmlns="http://www.zkoss.org/2005/zul" xmlns:n="native">
     <borderlayout height="100%">
         <north size="50px" border="none">
             <div style="background:#3A6EA5;color:white;padding:10px;">
@@ -9,14 +6,10 @@
             </div>
         </north>
 
-        <center autoscroll="true">
-            <!-- Di sini akan include konten ZUL CRUD -->
-            <include src="/user_management.zul"/>
-        </center>
+        <center autoscroll="true" self="@insert(content)" />
 
         <south size="30px" border="none">
             <div style="text-align:center;color:gray;">2025 ZK Project</div>
         </south>
     </borderlayout>
-
 </zk>

@@ -1,5 +1,6 @@
 package com.zkos.helloworld;
 
+import com.zkos.helloworld.model.User;
 import org.zkoss.bind.BindUtils;
 import org.zkoss.bind.annotation.*;
 import org.zkoss.image.Image;
