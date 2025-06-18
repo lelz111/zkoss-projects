@@ -3,7 +3,8 @@
 <zk xmlns="http://www.zkoss.org/2005/zul" xmlns:bind="http://www.zkoss.org/2005/zk/bind">
 
     <window viewModel="@id('vm') @init('com.zkos.helloworld.UserManagementViewModel')" width="100%" border="normal">
-        <vlayout width="90%" style="margin: 20px auto;">
+        <vlayout width="1000px" style="margin: 20px auto;">
+            <!-- Form Input User -->
             <groupbox mold="3d" width="100%">
                 <caption label="@load(vm.editMode ? 'Edit User' : 'Add User')"/>
                 <grid width="100%">
@@ -48,16 +49,18 @@
 
             <separator/>
 
+            <!-- Tabel User List -->
             <groupbox mold="3d" width="100%">
                 <caption label="User List"/>
-                <listbox model="@load(vm.userList)" width="100%" emptyMessage="No users found." sizedByContent="true" style="table-layout: auto;">
+                <listbox model="@load(vm.userList)" width="100%" emptyMessage="No users found."
+                         style="table-layout: fixed; overflow-x: auto;">
                     <listhead>
                         <listheader label="NPK" width="15%"/>
                         <listheader label="Nama Karyawan" width="25%"/>
                         <listheader label="Posisi" width="20%"/>
                         <listheader label="Status" width="15%"/>
                         <listheader label="Image" width="10%"/>
-                        <listheader label="Action" width="15%"/>
+                        <listheader label="Action" width="15%" style="min-width: 120px;"/>
                     </listhead>
                     <template name="model" var="user" status="stat">
                         <listitem>

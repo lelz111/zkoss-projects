@@ -191,7 +191,7 @@
 	</mime-mapping>
 
 	<welcome-file-list>
-		<welcome-file>index.zul</welcome-file>
+		<welcome-file>layout.zul</welcome-file>
 		<welcome-file>index.zhtml</welcome-file>
 		<welcome-file>index.html</welcome-file>
 		<welcome-file>index.htm</welcome-file>
