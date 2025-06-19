@@ -1,7 +1,7 @@
 <zk xmlns="http://www.zkoss.org/2005/zul">
     <window width="100%" border="normal"
             apply="org.zkoss.bind.BindComposer"
-            viewModel="@id('vm') @init('com.zkos.helloworld.viewmodel.UserManagementVM')">
+            viewModel="@id('vm') @init('com.zkos.helloworld.viewmodel.UserManagementVM')" self="@define(conten)">
         <vlayout width="1000px" style="margin: 20px auto;">
             <!-- Form Input -->
             <groupbox mold="3d" width="100%">

@@ -8,6 +8,17 @@
 	<display-name>helloworld</display-name>
 
 	<!-- //// -->
+
+	<!-- Spring configuration -->
+	<!-- Initialize spring context -->
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+	<!-- Enable webapp Scopes-->
+	<listener>
+		<listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
+	</listener>
+
 	<!-- ZK -->
 	<listener>
 		<description>ZK listener for session cleanup</description>

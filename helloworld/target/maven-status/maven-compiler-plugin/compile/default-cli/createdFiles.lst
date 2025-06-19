@@ -1,0 +1,7 @@
+com\zkos\helloworld\viewmodel\UserManagementVM.class
+com\zkos\helloworld\model\User.class
+com\zkos\helloworld\MyViewModel.class
+com\zkos\helloworld\service\UserServiceImpl.class
+com\zkos\helloworld\viewmodel\UserDetailVM.class
+com\zkos\helloworld\service\UserService.class
+com\zkos\helloworld\viewmodel\UserEditVM.class
