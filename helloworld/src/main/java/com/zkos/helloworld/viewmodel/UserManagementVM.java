@@ -57,6 +57,13 @@ public class UserManagementVM {
     @Command
     @NotifyChange({"filteredUsers", "npk", "nama", "posisi", "status", "imageMedia", "fileLabel", "editMode"})
     public void save() {
+        if (npk == null || npk.trim().isEmpty() ||
+                nama == null || nama.trim().isEmpty() ||
+                posisi == null || posisi.trim().isEmpty() ||
+                status == null || status.trim().isEmpty()) {
+            org.zkoss.zk.ui.util.Clients.showNotification("All fields are required!", "warning", null, "top_center", 2000);
+            return;
+        }
         User user = new User(npk, nama, posisi, status, imageMedia);
         if (editMode) {
             userService.updateUser(editIndex, user);

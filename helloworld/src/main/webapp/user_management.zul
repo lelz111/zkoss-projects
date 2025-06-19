@@ -3,7 +3,6 @@
             apply="org.zkoss.bind.BindComposer"
             viewModel="@id('vm') @init('com.zkos.helloworld.viewmodel.UserManagementVM')">
         <vlayout width="1000px" style="margin: 20px auto;">
-
             <!-- Form Input -->
             <groupbox mold="3d" width="100%">
                 <caption label="Form User"/>
@@ -13,10 +12,22 @@
                         <column/>
                     </columns>
                     <rows>
-                        <row><label value="NPK"/><textbox value="@bind(vm.npk)" width="100%"/></row>
-                        <row><label value="Nama Karyawan"/><textbox value="@bind(vm.nama)" width="100%"/></row>
-                        <row><label value="Posisi"/><textbox value="@bind(vm.posisi)" width="100%"/></row>
-                        <row><label value="Status"/><textbox value="@bind(vm.status)" width="100%"/></row>
+                        <row>
+                            <label value="NPK"/>
+                            <textbox value="@bind(vm.npk)" width="100%" constraint="no empty"/>
+                        </row>
+                        <row>
+                            <label value="Nama Karyawan"/>
+                            <textbox value="@bind(vm.nama)" width="100%" constraint="no empty"/>
+                        </row>
+                        <row>
+                            <label value="Posisi"/>
+                            <textbox value="@bind(vm.posisi)" width="100%" constraint="no empty"/>
+                        </row>
+                        <row>
+                            <label value="Status"/>
+                            <textbox value="@bind(vm.status)" width="100%" constraint="no empty"/>
+                        </row>
                         <row>
                             <label value="Image"/>
                             <vbox spacing="5px">
