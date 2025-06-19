@@ -1,17 +1,14 @@
-<window id="editWin" title="Edit User" border="normal" width="300px"
-        closable="true" mode="modal"
+<window border="normal" width="300px" title="Edit User" mode="modal" closable="true"
         apply="org.zkoss.bind.BindComposer"
         viewModel="@id('vm') @init('com.zkos.helloworld.viewmodel.UserEditVM')">
-
-    <vlayout style="padding: 20px">
-        <textbox value="@bind(vm.npk)" placeholder="NPK"/>
-        <textbox value="@bind(vm.nama)" placeholder="Nama"/>
-        <textbox value="@bind(vm.posisi)" placeholder="Posisi"/>
-        <textbox value="@bind(vm.status)" placeholder="Status"/>
-
-        <hlayout>
-            <button label="Simpan" onClick="@command('save')" />
-            <button label="Batal" onClick="@command('cancel')" />
+    <vlayout style="padding:20px;">
+        <textbox placeholder="NPK" value="@bind(vm.npk)"/>
+        <textbox placeholder="Nama" value="@bind(vm.nama)"/>
+        <textbox placeholder="Posisi" value="@bind(vm.posisi)"/>
+        <textbox placeholder="Status" value="@bind(vm.status)"/>
+        <hlayout spacing="10px" style="margin-top:10px;">
+            <button label="Save" onClick="@command('save')"/>
+            <button label="Cancel" onClick="@command('cancel')"/>
         </hlayout>
     </vlayout>
 </window>

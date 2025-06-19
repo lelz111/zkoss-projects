@@ -1,32 +1,24 @@
 package com.zkos.helloworld.viewmodel;
 
+import com.zkos.helloworld.model.User;
 import org.zkoss.bind.annotation.ExecutionArgParam;
 import org.zkoss.bind.annotation.Init;
 import org.zkoss.image.Image;
 
 public class UserDetailVM {
-    private String npk;
-    private String nama;
-    private String posisi;
-    private String status;
+    private String npk, nama, posisi, status;
     private Image imageMedia;
 
     @Init
-    public void init(@ExecutionArgParam("npk") String npk,
-                     @ExecutionArgParam("nama") String nama,
-                     @ExecutionArgParam("posisi") String posisi,
-                     @ExecutionArgParam("status") String status,
-                     @ExecutionArgParam("imageMedia") Image imageMedia) {
-        this.npk = npk;
-        this.nama = nama;
-        this.posisi = posisi;
-        this.status = status;
-        this.imageMedia = imageMedia;
+    public void init(@ExecutionArgParam("user") User u) {
+        this.npk = u.getNpk();
+        this.nama = u.getNamaKaryawan();
+        this.posisi = u.getPosisi();
+        this.status = u.getStatus();
+        this.imageMedia = u.getImageMedia();
     }
 
-    public String getNpk() { return npk; }
-    public String getNama() { return nama; }
-    public String getPosisi() { return posisi; }
-    public String getStatus() { return status; }
-    public Image getImageMedia() { return imageMedia; }
+    public String getNpk(){return npk;} public String getNama(){return nama;}
+    public String getPosisi(){return posisi;} public String getStatus(){return status;}
+    public Image getImageMedia(){return imageMedia;}
 }
