@@ -38,10 +38,13 @@
 
             <separator/>
             <!-- Search Box -->
-            <hbox width="100%" style="margin-bottom:10px;">
+            <hbox width="100%" style="margin-bottom:10px;" spacing="10px">
                 <label value="Search User:" />
-                <textbox id="searchBox" placeholder="Cari NPK / Nama / Posisi / Status" width="300px" />
+                <textbox id="searchBox" placeholder="Cari NPK / Nama / Posisi / Status" width="300px"/>
+                <button id="searchBtn" label="Search"/>
+                <button id="resetBtn" label="Reset"/>
             </hbox>
+
             <!-- Tabel User -->
             <groupbox mold="3d" width="100%">
                 <caption label="User List"/>
@@ -53,7 +56,7 @@
                         <listheader label="Posisi" width="20%"/>
                         <listheader label="Status" width="15%"/>
                         <listheader label="Image" width="10%"/>
-                        <listheader label="Action" width="15%"/>
+                        <listheader label="Action" width="30%" align="center"/> <!-- ubah 10% ke 15% atau lebih -->
                     </listhead>
                 </listbox>
             </groupbox>

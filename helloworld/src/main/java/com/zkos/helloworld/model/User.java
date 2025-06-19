@@ -19,18 +19,43 @@ public class User {
         this.imageMedia = imageMedia;
     }
 
-    public String getNpk() { return npk; }
-    public void setNpk(String npk) { this.npk = npk; }
+    public String getNpk() {
+        return npk;
+    }
 
-    public String getNamaKaryawan() { return namaKaryawan; }
-    public void setNamaKaryawan(String namaKaryawan) { this.namaKaryawan = namaKaryawan; }
+    public void setNpk(String npk) {
+        this.npk = npk;
+    }
 
-    public String getPosisi() { return posisi; }
-    public void setPosisi(String posisi) { this.posisi = posisi; }
+    public String getNamaKaryawan() {
+        return namaKaryawan;
+    }
 
-    public String getStatus() { return status; }
-    public void setStatus(String status) { this.status = status; }
+    public void setNamaKaryawan(String namaKaryawan) {
+        this.namaKaryawan = namaKaryawan;
+    }
 
-    public Image getImageMedia() { return imageMedia; }
-    public void setImageMedia(Image imageMedia) { this.imageMedia = imageMedia; }
+    public String getPosisi() {
+        return posisi;
+    }
+
+    public void setPosisi(String posisi) {
+        this.posisi = posisi;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public Image getImageMedia() {
+        return imageMedia;
+    }
+
+    public void setImageMedia(Image imageMedia) {
+        this.imageMedia = imageMedia;
+    }
 }

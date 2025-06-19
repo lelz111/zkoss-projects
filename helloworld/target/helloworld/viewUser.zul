@@ -1,0 +1,12 @@
+<!--<?xml version="1.0" encoding="UTF-8"?>-->
+<!--<window title="User Detail" mode="modal" border="normal" width="400px">-->
+<!--    <vlayout>-->
+<!--        <label value="Nama: ${arg.user.nama}"/>-->
+<!--        <label value="Email: ${arg.user.email}"/>-->
+<!--        <label value="Gender: ${arg.user.gender}"/>-->
+<!--        <label value="No HP: ${arg.user.noHp}"/>-->
+<!--        <image src="${arg.user.foto}" width="80px" height="80px"/>-->
+<!--        <label value="Deskripsi: ${arg.user.deskripsi}"/>-->
+<!--    </vlayout>-->
+<!--    <button label="Close" onClick="self.parent.detach()"/>-->
+<!--</window>-->

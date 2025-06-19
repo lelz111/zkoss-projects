@@ -1,5 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.zkos</groupId>
 	<artifactId>helloworld</artifactId>
@@ -28,7 +29,7 @@
 		</repository>
 		<repository>
 			<id>ZK EVAL</id>
-      		<name>ZK Evaluation Repository</name>
+			<name>ZK Evaluation Repository</name>
 			<url>https://mavensync.zkoss.org/eval</url>
 		</repository>
 	</repositories>
@@ -64,17 +65,9 @@
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
-			<version>1.18.34</version>
+			<version>1.18.32</version>
 			<scope>provided</scope>
 		</dependency>
-
-		<!-- ZK Bind (untuk @AfterCompose, @Wire, dll) -->
-		<dependency>
-			<groupId>org.zkoss.zk</groupId>
-			<artifactId>zkbind</artifactId>
-			<version>9.6.0</version>
-		</dependency>
-		
 		<dependency>
 			<groupId>commons-io</groupId>
 			<artifactId>commons-io</artifactId>
@@ -111,7 +104,7 @@
 			<plugin>
 				<artifactId>maven-war-plugin</artifactId>
 				<groupId>org.apache.maven.plugins</groupId>
-				<version>2.1.1</version>
+				<version>3.3.2</version>
 			</plugin>
 			<!-- Pack zips -->
 			<plugin>

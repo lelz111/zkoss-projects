@@ -1,0 +1,12 @@
+<window id="detailWin" title="Detail User" border="normal" width="300px" closable="true"
+        apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('com.zkos.helloworld.viewmodel.UserDetailVM')">
+
+    <vlayout style="padding:15px">
+        <label value="NPK: ${param.npk}" />
+        <label value="Nama: ${param.nama}" />
+        <label value="Posisi: ${param.posisi}" />
+        <label value="Status: ${param.status}" />
+
+        <button label="Kembali" onClick="detailWin.detach()" style="margin-top:10px;" />
+    </vlayout>
+</window>
