@@ -22,4 +22,23 @@
     </bean>
 
     <tx:annotation-driven />
+
+    <!-- datasource for flyway database -->
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="org.postgresql.Driver" />
+        <property name="url" value="jdbc:postgresql://localhost:5432/myapp_db" />
+        <property name="username" value="postgres" />
+        <property name="password" value="password" />
+    </bean>
+
+    <!-- Initiate bean for Flyway -->
+    <bean id="flyway" class="org.flywaydb.core.Flyway" init-method="migrate" depends-on="dataSource">
+        <property name="dataSource" ref="dataSource" />
+        <property name="BaselineOnMigrate" value="true" />
+        <property name="locations">
+            <list>
+                <value>classpath:db/migration</value>
+            </list>
+        </property>
+    </bean>
 </beans>

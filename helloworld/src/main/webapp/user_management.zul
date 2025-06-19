@@ -75,7 +75,7 @@
                             <listcell label="@load(user.posisi)"/>
                             <listcell label="@load(user.status)"/>
                             <listcell>
-                                <image content="@load(user.imageMedia)" width="40px" height="40px"/>
+                                <image content="@load(vm.userImageMedia(user))" width="40px" height="40px"/>
                             </listcell>
                             <listcell>
                                 <hbox spacing="5px">

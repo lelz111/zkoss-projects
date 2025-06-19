@@ -2,22 +2,21 @@ package com.zkos.helloworld.viewmodel;
 
 import com.zkos.helloworld.model.User;
 import com.zkos.helloworld.service.UserService;
-import com.zkos.helloworld.service.UserServiceImpl;
-import org.zkoss.bind.BindUtils;
 import org.zkoss.bind.annotation.*;
 import org.zkoss.image.AImage;
 import org.zkoss.image.Image;
 import org.zkoss.util.media.Media;
 import org.zkoss.zk.ui.Executions;
+import org.zkoss.zkplus.spring.SpringUtil;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public class UserManagementVM {
-    private final UserService userService = new UserServiceImpl();
+    private final UserService userService = (UserService) SpringUtil.getBean("userService");
     private List<User> users = userService.getAllUsers();
     private List<User> filteredUsers = new ArrayList<>(users);
 
@@ -29,14 +28,13 @@ public class UserManagementVM {
     private String fileLabel;
 
     private boolean editMode = false;
-    private int editIndex = -1;
+    private Long editId = null;
 
     private String searchKeyword;
 
     @Init
     public void init() {}
 
-    // Bindable getters and setters
     public List<User> getFilteredUsers() { return filteredUsers; }
     public String getNpk() { return npk; }
     public void setNpk(String npk) { this.npk = npk; }
@@ -64,15 +62,45 @@ public class UserManagementVM {
             org.zkoss.zk.ui.util.Clients.showNotification("All fields are required!", "warning", null, "top_center", 2000);
             return;
         }
-        User user = new User(npk, nama, posisi, status, imageMedia);
-        if (editMode) {
-            userService.updateUser(editIndex, user);
-            users.set(editIndex, user);
+        byte[] imgBytes = null;
+        if (imageMedia != null) {
+            try (InputStream is = imageMedia.getStreamData()) {
+                imgBytes = is.readAllBytes();
+            } catch (IOException e) {
+                org.zkoss.zk.ui.util.Clients.showNotification("Failed to read image!", "error", null, "top_center", 2000);
+                return;
+            }
+        }
+        User user;
+        if (editMode && editId != null) {
+            // Use existing user and update fields
+            user = userService.getUserById(editId);
+            if (user != null) {
+                user.setNpk(npk);
+                user.setNamaKaryawan(nama);
+                user.setPosisi(posisi);
+                user.setStatus(status);
+                user.setImageData(imgBytes);
+                userService.updateUser(user);
+            }
             editMode = false;
+            editId = null;
         } else {
+            user = new User(npk, nama, posisi, status, imgBytes);
             userService.addUser(user);
         }
+        users = userService.getAllUsers();
+        filteredUsers = new ArrayList<>(users);
         resetForm();
+    }
+
+    public org.zkoss.image.Image userImageMedia(User user) {
+        if (user.getImageData() == null) return null;
+        try {
+            return new org.zkoss.image.AImage("img", user.getImageData());
+        } catch (java.io.IOException e) {
+            return null;
+        }
     }
 
     @Command
@@ -89,7 +117,7 @@ public class UserManagementVM {
         this.imageMedia = null;
         this.fileLabel = "";
         this.editMode = false;
-        this.editIndex = -1;
+        this.editId = null;
         this.filteredUsers = new ArrayList<>(users);
     }
 
@@ -118,18 +146,26 @@ public class UserManagementVM {
         this.nama = user.getNamaKaryawan();
         this.posisi = user.getPosisi();
         this.status = user.getStatus();
-        this.imageMedia = user.getImageMedia();
+        try {
+            this.imageMedia = user.getImageData() != null ? new AImage("img", user.getImageData()) : null;
+        } catch (IOException e) {
+            this.imageMedia = null;
+            org.zkoss.zk.ui.util.Clients.showNotification("Failed to load image!", "error", null, "top_center", 2000);
+        }
         this.fileLabel = "";
         this.editMode = true;
-        this.editIndex = index;
+        this.editId = user.getId();
     }
 
     @Command
     @NotifyChange("filteredUsers")
     public void delete(@BindingParam("index") int index) {
-        userService.deleteUser(index);
-        users.remove(index);
-        filteredUsers.remove(index);
+        if (index >= 0 && index < filteredUsers.size()) {
+            User user = filteredUsers.get(index);
+            userService.deleteUser(user.getId());
+            users = userService.getAllUsers();
+            filteredUsers = new ArrayList<>(users);
+        }
     }
 
     @Command
