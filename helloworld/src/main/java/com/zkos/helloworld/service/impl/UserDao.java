@@ -17,6 +17,28 @@ public class UserDao {
     private EntityManager em;
 
     @Transactional(readOnly = true)
+    public User findByNpk(String npk) {
+        try {
+            return em.createQuery("SELECT u FROM User u WHERE u.npk = :npk", User.class)
+                    .setParameter("npk", npk)
+                    .getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
+    }
+
+    @Transactional(readOnly = true)
+    public User getByNpk(String npk) {
+        try {
+            return em.createQuery("SELECT u FROM User u WHERE u.npk = :npk", User.class)
+                    .setParameter("npk", npk)
+                    .getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
+    }
+
+    @Transactional(readOnly = true)
     public List<User> queryAll() {
         Query query = em.createQuery("SELECT u FROM User u");
         return query.getResultList();

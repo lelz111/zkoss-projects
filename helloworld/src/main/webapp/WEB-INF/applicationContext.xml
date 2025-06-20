@@ -31,6 +31,8 @@
         <property name="password" value="password" />
     </bean>
 
+    <bean id="securityConfig" class="com.zkos.helloworld.config.SecurityConfig" />
+
     <!-- Initiate bean for Flyway -->
     <bean id="flyway" class="org.flywaydb.core.Flyway" init-method="migrate" depends-on="dataSource">
         <property name="dataSource" ref="dataSource" />

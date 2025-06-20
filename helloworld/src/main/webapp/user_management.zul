@@ -3,8 +3,11 @@
             apply="org.zkoss.bind.BindComposer"
             viewModel="@id('vm') @init('com.zkos.helloworld.viewmodel.UserManagementVM')" self="@define(conten)">
         <vlayout width="1000px" style="margin: 20px auto;">
-            <!-- Form Input -->
-            <groupbox mold="3d" width="100%">
+            <hlayout style="margin-bottom:15px;">
+                <button label="Logout" href="/logout"/>
+            </hlayout>
+            <!-- Form Input: Only for ADMIN -->
+            <groupbox mold="3d" width="100%" visible="@load(vm.isAdmin())">
                 <caption label="Form User"/>
                 <grid width="100%">
                     <columns>
@@ -27,6 +30,10 @@
                         <row>
                             <label value="Status"/>
                             <textbox value="@bind(vm.status)" width="100%" constraint="no empty"/>
+                        </row>
+                        <row visible="@load(not vm.editMode)">
+                            <label value="Password:"/>
+                            <textbox type="password" value="@bind(vm.password)" hflex="1" placeholder="Enter password" constraint="no empty"/>
                         </row>
                         <row>
                             <label value="Image"/>
@@ -79,8 +86,8 @@
                             </listcell>
                             <listcell>
                                 <hbox spacing="5px">
-                                    <button label="Edit" onClick="@command('edit', user=user, index=stat.index)"/>
-                                    <button label="Delete" onClick="@command('delete', index=stat.index)"/>
+                                    <button label="Edit" onClick="@command('edit', user=user, index=stat.index)" visible="@load(vm.isAdmin())"/>
+                                    <button label="Delete" onClick="@command('delete', index=stat.index)" visible="@load(vm.isAdmin())"/>
                                     <button label="View" onClick="@command('view', user=user)"/>
                                 </hbox>
                             </listcell>
@@ -88,7 +95,6 @@
                     </template>
                 </listbox>
             </groupbox>
-
         </vlayout>
     </window>
 </zk>

@@ -1,10 +1,10 @@
 package com.zkos.helloworld.viewmodel;
 
 import com.zkos.helloworld.model.User;
-import org.zkoss.bind.annotation.ExecutionArgParam;
 import org.zkoss.bind.annotation.Init;
 import org.zkoss.image.AImage;
 import org.zkoss.image.Image;
+import org.zkoss.zk.ui.Executions;
 
 import java.io.IOException;
 
@@ -13,15 +13,18 @@ public class UserDetailVM {
     private Image imageMedia;
 
     @Init
-    public void init(@ExecutionArgParam("user") User u) {
-        this.npk = u.getNpk();
-        this.nama = u.getNamaKaryawan();
-        this.posisi = u.getPosisi();
-        this.status = u.getStatus();
-        try {
-            this.imageMedia = u.getImageData() != null ? new AImage("img", u.getImageData()) : null;
-        } catch (IOException e) {
-            this.imageMedia = null;
+    public void init() {
+        User u = (User) Executions.getCurrent().getAttribute("selectedUser");
+        if (u != null) {
+            this.npk = u.getNpk();
+            this.nama = u.getNamaKaryawan();
+            this.posisi = u.getPosisi();
+            this.status = u.getStatus();
+            try {
+                this.imageMedia = u.getImageData() != null ? new AImage("img", u.getImageData()) : null;
+            } catch (IOException e) {
+                this.imageMedia = null;
+            }
         }
     }
 

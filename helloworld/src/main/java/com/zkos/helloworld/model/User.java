@@ -2,7 +2,6 @@ package com.zkos.helloworld.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -17,6 +16,9 @@ public class User implements Serializable {
 
     @Column(nullable = false, unique = true)
     private String npk;
+
+    @Column(nullable = false)
+    private String password;
 
     @Column(nullable = false)
     private String namaKaryawan;
@@ -41,20 +43,16 @@ public class User implements Serializable {
 
     public User() {}
 
-    public User(String npk, String namaKaryawan, String posisi, String status, byte[] imageData) {
-        this.npk = npk;
-        this.namaKaryawan = namaKaryawan;
-        this.posisi = posisi;
-        this.status = status;
-        this.imageData = imageData;
-    }
-
-    // Getters & Setters
+    // Getters and Setters
     public Long getId() { return id; }
 
     public String getNpk() { return npk; }
 
     public void setNpk(String npk) { this.npk = npk; }
+
+    public String getPassword() { return password; }
+
+    public void setPassword(String password) { this.password = password; }
 
     public String getNamaKaryawan() { return namaKaryawan; }
 
@@ -76,7 +74,6 @@ public class User implements Serializable {
 
     public void setRoles(Set<Role> roles) { this.roles = roles; }
 
-    // equals, hashCode, toString
     @Override
     public int hashCode() {
         return Objects.hash(id);

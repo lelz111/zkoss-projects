@@ -19,6 +19,16 @@
 		<listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
 	</listener>
 
+	<!-- Spring Security Filters -->
+	<filter>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
 	<!-- ZK -->
 	<listener>
 		<description>ZK listener for session cleanup</description>
@@ -202,7 +212,7 @@
 	</mime-mapping>
 
 	<welcome-file-list>
-		<welcome-file>layout.zul</welcome-file>
+		<welcome-file>login.zul</welcome-file>
 		<welcome-file>index.zhtml</welcome-file>
 		<welcome-file>index.html</welcome-file>
 		<welcome-file>index.htm</welcome-file>

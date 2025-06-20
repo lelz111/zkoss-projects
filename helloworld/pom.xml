@@ -120,6 +120,32 @@
 			<artifactId>logback-classic</artifactId>
 			<version>1.2.7</version>
 		</dependency>
+		<!-- Spring Security Core -->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-core</artifactId>
+			<version>5.2.3.RELEASE</version> <!-- Compatible with Spring Framework 5.2.x -->
+		</dependency>
+
+		<!-- Spring Security Web -->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-web</artifactId>
+			<version>5.2.3.RELEASE</version>
+		</dependency>
+
+		<!-- Spring Security Config (for enabling security features via Java Config) -->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-config</artifactId>
+			<version>5.2.3.RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>4.0.1</version>
+			<scope>provided</scope>
+		</dependency>
 
 		<!-- SLF4J API -->
 		<dependency>
