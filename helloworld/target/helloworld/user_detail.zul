@@ -1,0 +1,14 @@
+<window border="normal" width="300px" title="Detail User" mode="modal" closable="true"
+        apply="org.zkoss.bind.BindComposer"
+        viewModel="@id('vm') @init('com.zkos.helloworld.viewmodel.UserDetailVM')">
+    <vlayout style="padding:20px;">
+        <label value="NPK: ${vm.npk}" />
+        <label value="Nama: ${vm.nama}" />
+        <label value="Posisi: ${vm.posisi}" />
+        <label value="Status: ${vm.status}" />
+        <separator/>
+        <image content="${vm.imageMedia}" width="100px" height="100px" style="border-radius:10px;"/>
+        <separator/>
+        <button label="Close" onClick="self.detach()"/>
+    </vlayout>
+</window>

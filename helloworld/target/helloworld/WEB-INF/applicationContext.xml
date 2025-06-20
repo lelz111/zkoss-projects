@@ -1,0 +1,53 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-3.0.xsd
+        http://www.springframework.org/schema/tx
+		http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
+
+    <context:component-scan base-package="com.zkos.helloworld" />
+
+    <!-- jpa(hibernate) configuration -->
+    <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalEntityManagerFactoryBean">
+        <property name="persistenceUnitName" value="myapp"/>
+    </bean>
+
+    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="entityManagerFactory" />
+    </bean>
+
+    <tx:annotation-driven />
+
+    <!-- datasource for flyway database -->
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="org.postgresql.Driver" />
+        <property name="url" value="jdbc:postgresql://localhost:5432/myapp_db" />
+        <property name="username" value="postgres" />
+        <property name="password" value="password" />
+    </bean>
+
+    <bean id="securityConfig" class="com.zkos.helloworld.config.SecurityConfig" />
+
+    <!-- Initiate bean for Flyway -->
+    <bean id="flyway" class="org.flywaydb.core.Flyway" init-method="migrate" depends-on="dataSource">
+        <property name="dataSource" ref="dataSource" />
+        <property name="baselineOnMigrate" value="true" />
+        <property name="baselineVersion">
+            <bean class="org.flywaydb.core.api.MigrationVersion" factory-method="fromVersion">
+                <constructor-arg value="0" />
+            </bean>
+        </property>
+        <property name="locations">
+            <list>
+                <value>classpath:db/migration</value>
+            </list>
+        </property>
+    </bean>
+
+
+</beans>

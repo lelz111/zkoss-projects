@@ -1,0 +1,26 @@
+<zk xmlns:h="native">
+    <window title="Login" border="normal" width="300px" height="500px" closable="false" position="center">
+        <vlayout spacing="10px" hflex="min" vflex="min">
+            <label value="Please login:"/>
+            <!-- Use h:form to render native HTML form -->
+            <h:form action="${pageContext.request.contextPath}/login.zul" method="POST">
+                <grid>
+                    <rows>
+                        <row>
+                            <label value="Username:"/>
+                            <textbox name="username" hflex="1" placeholder="Enter username"/>
+                        </row>
+                        <row>
+                            <label value="Password:"/>
+                            <textbox  name="password" type="password" hflex="1" placeholder="Enter password"/>
+                        </row>
+                        <row>
+                            <button type="submit" label="Login" width="100%"/>
+                        </row>
+                    </rows>
+                </grid>
+            </h:form>
+            <label value="Invalid username or password" style="color: red;" visible="${param.error != null}"/>
+        </vlayout>
+    </window>
+</zk>

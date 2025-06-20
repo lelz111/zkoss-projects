@@ -19,9 +19,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
+                .headers().frameOptions().sameOrigin() // ✅ tambahkan baris ini
+                .and()
                 .authorizeRequests()
-                .antMatchers("/user_management.zul")
-                .hasAnyRole("ADMIN", "USER")
+                .antMatchers("/user_management.zul").hasAnyRole("ADMIN", "USER")
+                .anyRequest().permitAll()
                 .and()
                 .formLogin()
                 .loginPage("/login.zul")
@@ -30,8 +32,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .logout()
                 .logoutUrl("/logout")
                 .permitAll()
-                .and().exceptionHandling().accessDeniedPage("/accessDenied.zul");
+                .and()
+                .exceptionHandling().accessDeniedPage("/accessDenied.zul");
     }
+
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -42,4 +46,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
 }

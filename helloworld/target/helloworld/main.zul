@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <window title="Simple User CRUD" border="normal" width="400px"
+            viewModel="@id('vm') @init('com.zkos.helloworld.UserManagementViewModel')">
+
+        <groupbox mold="3d" width="100%" closable="false">
+            <caption label="@load(vm.editMode ? 'Edit User' : 'Add User')"/>
+            <grid>
+                <rows>
+                    <row>
+                        <label value="Username"/>
+                        <textbox value="@bind(vm.newUser.username)"/>
+                    </row>
+                    <row>
+                        <label value="Password"/>
+                        <textbox type="password" value="@bind(vm.newUser.password)"/>
+                    </row>
+                </rows>
+            </grid>
+            <hbox pack="end" width="100%">
+                <button label="@load(vm.editMode ? 'Update' : 'Save')" onClick="@command('saveUser')" width="80px"/>
+                <button label="Cancel" onClick="@command('cancelEdit')" visible="@load(vm.editMode)" width="80px"/>
+            </hbox>
+        </groupbox>
+
+        <groupbox mold="3d" width="100%" closable="false">
+            <caption label="User List"/>
+            <grid width="100%" model="@bind(vm.userList)">
+                <columns>
+                    <column label="Username"/>
+                    <column label="Password"/>
+                    <column label="Action"/>
+                </columns>
+                <template name="model" var="user">
+                    <row>
+                        <label value="@load(user.username)"/>
+                        <label value="@load(user.password)"/>
+                        <hbox>
+                            <button label="Edit" onClick="@command('editUser', user=user)" width="50px"/>
+                            <button label="Delete" onClick="@command('deleteUser', user=user)" width="60px"/>
+                        </hbox>
+                    </row>
+                </template>
+            </grid>
+        </groupbox>
+    </window>
+</zk>

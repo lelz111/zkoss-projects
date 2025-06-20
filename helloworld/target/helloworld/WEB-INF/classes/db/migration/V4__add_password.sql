@@ -1,0 +1,5 @@
+--ALTER TABLE users ADD COLUMN IF NOT EXISTS password VARCHAR(255) NOT NULL;
+--
+---- Contoh password (bcrypt): "password"
+--UPDATE users SET password = '$2a$10$g0rwrxHccjK/N4OkXos7B.H3P33RYRQxw8mSkNn7Z6FxjUN6HaYpi'
+--WHERE password IS NULL;

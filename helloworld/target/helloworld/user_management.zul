@@ -1,0 +1,105 @@
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <window width="100%" border="normal"
+            apply="org.zkoss.bind.BindComposer"
+            viewModel="@id('vm') @init('com.zkos.helloworld.viewmodel.UserManagementVM')">
+
+        <vlayout width="1000px" style="margin: 20px auto;">
+            <!-- Logout -->
+            <hlayout style="margin-bottom:15px;">
+                <button label="Logout" href="/logout"/>
+            </hlayout>
+
+            <!-- Form Input (Admin Only) -->
+            <groupbox mold="3d" width="100%" visible="@load(vm.isAdmin())">
+                <caption label="Form User"/>
+                <grid width="100%">
+                    <columns>
+                        <column width="150px"/>
+                        <column/>
+                    </columns>
+                    <rows>
+                        <row>
+                            <label value="NPK"/>
+                            <textbox value="@bind(vm.npk)" width="100%" constraint="no empty"/>
+                        </row>
+                        <row>
+                            <label value="Nama Karyawan"/>
+                            <textbox value="@bind(vm.nama)" width="100%" constraint="no empty"/>
+                        </row>
+                        <row>
+                            <label value="Posisi"/>
+                            <textbox value="@bind(vm.posisi)" width="100%" constraint="no empty"/>
+                        </row>
+                        <row>
+                            <label value="Status"/>
+                            <textbox value="@bind(vm.status)" width="100%" constraint="no empty"/>
+                        </row>
+                        <row visible="@load(not vm.editMode)">
+                            <label value="Password"/>
+                            <textbox type="password" value="@bind(vm.password)" width="100%" constraint="no empty"/>
+                        </row>
+                        <row>
+                            <label value="Image"/>
+                            <hbox spacing="10px">
+                                <button label="Upload"
+                                        upload="true"
+                                        onUpload="@command('uploadImage', media=event.media)"/>
+                                <image content="@bind(vm.imageMedia)" width="60px" height="60px"/>
+                            </hbox>
+                            <label value="@bind(vm.fileLabel)" style="color:green; font-size:12px; margin-top:5px;"/>
+                        </row>
+
+                    </rows>
+                </grid>
+
+                <hbox pack="end" width="100%" style="margin-top:10px;">
+                    <button label="Save" width="90px" onClick="@command('save')"/>
+                    <button label="Cancel" width="90px" visible="@bind(vm.editMode)" onClick="@command('reset')"/>
+                </hbox>
+            </groupbox>
+
+            <separator/>
+
+            <!-- Search -->
+            <hbox spacing="10px" style="margin-bottom:10px;">
+                <label value="Search User:"/>
+                <textbox value="@bind(vm.searchKeyword)" placeholder="Cari NPK / Nama / Posisi / Status" width="300px"/>
+                <button label="Search" onClick="@command('search')"/>
+                <button label="Reset" onClick="@command('reset')"/>
+            </hbox>
+
+            <!-- Tabel User -->
+            <groupbox mold="3d" width="100%">
+                <caption label="User List"/>
+                <listbox model="@bind(vm.filteredUsers)" width="100%" emptyMessage="No users found.">
+                    <listhead>
+                        <listheader label="NPK" width="15%"/>
+                        <listheader label="Nama Karyawan" width="25%"/>
+                        <listheader label="Posisi" width="20%"/>
+                        <listheader label="Status" width="15%"/>
+                        <listheader label="Image" width="10%"/>
+                        <listheader label="Action" width="30%" align="center"/>
+                    </listhead>
+                    <template name="model" var="user" status="stat">
+                        <listitem>
+                            <listcell label="@load(user.npk)"/>
+                            <listcell label="@load(user.namaKaryawan)"/>
+                            <listcell label="@load(user.posisi)"/>
+                            <listcell label="@load(user.status)"/>
+                            <listcell>
+                                <image content="@load(vm.userImageMedia(user))" width="40px" height="40px"/>
+                            </listcell>
+                            <listcell>
+                                <hbox spacing="5px">
+                                    <button label="Edit" onClick="@command('edit', user=user, index=stat.index)" visible="@load(vm.isAdmin())"/>
+                                    <button label="Delete" onClick="@command('delete', index=stat.index)" visible="@load(vm.isAdmin())"/>
+                                    <button label="View" onClick="@command('view', user=user)"/>
+                                </hbox>
+                            </listcell>
+                        </listitem>
+                    </template>
+                </listbox>
+            </groupbox>
+        </vlayout>
+    </window>
+</zk>

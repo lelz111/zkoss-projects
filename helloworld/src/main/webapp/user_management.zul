@@ -1,12 +1,15 @@
 <zk xmlns="http://www.zkoss.org/2005/zul">
     <window width="100%" border="normal"
             apply="org.zkoss.bind.BindComposer"
-            viewModel="@id('vm') @init('com.zkos.helloworld.viewmodel.UserManagementVM')" self="@define(conten)">
+            viewModel="@id('vm') @init('com.zkos.helloworld.viewmodel.UserManagementVM')">
+
         <vlayout width="1000px" style="margin: 20px auto;">
+            <!-- Logout -->
             <hlayout style="margin-bottom:15px;">
                 <button label="Logout" href="/logout"/>
             </hlayout>
-            <!-- Form Input: Only for ADMIN -->
+
+            <!-- Form Input (Admin Only) -->
             <groupbox mold="3d" width="100%" visible="@load(vm.isAdmin())">
                 <caption label="Form User"/>
                 <grid width="100%">
@@ -32,24 +35,41 @@
                             <textbox value="@bind(vm.status)" width="100%" constraint="no empty"/>
                         </row>
                         <row visible="@load(not vm.editMode)">
-                            <label value="Password:"/>
-                            <textbox type="password" value="@bind(vm.password)" hflex="1" placeholder="Enter password" constraint="no empty"/>
+                            <label value="Password"/>
+                            <textbox type="password" value="@bind(vm.password)" width="100%" constraint="no empty"/>
                         </row>
                         <row>
                             <label value="Image"/>
-                            <vbox spacing="5px">
-                                <hbox spacing="10px">
-                                    <button label="Upload" upload="true" onUpload="@command('uploadImage', media=event.media)"/>
-                                    <image content="@bind(vm.imageMedia)" width="60px" height="60px"/>
-                                </hbox>
-                                <label value="@bind(vm.fileLabel)" style="color:green;font-size:12px"/>
-                            </vbox>
+                            <hbox spacing="10px">
+                                <button label="Upload Gambar"
+                                        upload="true,maxsize=512000"
+                                        onUpload="uploadImage(event.media)"/>
+                                <zscript>
+                                    void uploadImage(org.zkoss.util.media.Media media) {
+                                    import org.zkoss.bind.BindUtils;
+                                    import java.util.HashMap;
+                                    HashMap params = new HashMap();
+                                    params.put("media", media);
+                                    BindUtils.postGlobalCommand(null, null, "uploadImage", params);
+                                    }
+                                </zscript>
+
+                                <image content="@load(vm.imageMedia)" width="60px" height="60px"/>
+                            </hbox>
                         </row>
+
+                        <row>
+                            <label/>
+                            <label value="@bind(vm.fileLabel)" style="color:green; font-size:12px;"/>
+                        </row>
+
+
                     </rows>
                 </grid>
+
                 <hbox pack="end" width="100%" style="margin-top:10px;">
                     <button label="Save" width="90px" onClick="@command('save')"/>
-                    <button label="Cancel" width="90px" visible="@bind(vm.editMode)" onClick="@command('cancel')"/>
+                    <button label="Cancel" width="90px" visible="@bind(vm.editMode)" onClick="@command('reset')"/>
                 </hbox>
             </groupbox>
 
