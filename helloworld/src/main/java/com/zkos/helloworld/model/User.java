@@ -1,19 +1,19 @@
 package com.zkos.helloworld.model;
 
-//import jakarta.persistence.*;
-
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
-@Table(name = "users") // nama tabel di DB
+@Table(name = "users")
 public class User implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id; // primary key
+    private Long id;
 
     @Column(nullable = false, unique = true)
     private String npk;
@@ -29,9 +29,16 @@ public class User implements Serializable {
 
     @Lob
     @Column(name = "image_data")
-    private byte[] imageData; // representasi binary dari image
+    private byte[] imageData;
 
-    // Constructors
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "user_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id")
+    )
+    private Set<Role> roles = new HashSet<>();
+
     public User() {}
 
     public User(String npk, String namaKaryawan, String posisi, String status, byte[] imageData) {
@@ -42,52 +49,34 @@ public class User implements Serializable {
         this.imageData = imageData;
     }
 
-    // Getters and Setters
-    public Long getId() {
-        return id;
-    }
+    // Getters & Setters
+    public Long getId() { return id; }
 
-    public String getNpk() {
-        return npk;
-    }
+    public String getNpk() { return npk; }
 
-    public void setNpk(String npk) {
-        this.npk = npk;
-    }
+    public void setNpk(String npk) { this.npk = npk; }
 
-    public String getNamaKaryawan() {
-        return namaKaryawan;
-    }
+    public String getNamaKaryawan() { return namaKaryawan; }
 
-    public void setNamaKaryawan(String namaKaryawan) {
-        this.namaKaryawan = namaKaryawan;
-    }
+    public void setNamaKaryawan(String namaKaryawan) { this.namaKaryawan = namaKaryawan; }
 
-    public String getPosisi() {
-        return posisi;
-    }
+    public String getPosisi() { return posisi; }
 
-    public void setPosisi(String posisi) {
-        this.posisi = posisi;
-    }
+    public void setPosisi(String posisi) { this.posisi = posisi; }
 
-    public String getStatus() {
-        return status;
-    }
+    public String getStatus() { return status; }
 
-    public void setStatus(String status) {
-        this.status = status;
-    }
+    public void setStatus(String status) { this.status = status; }
 
-    public byte[] getImageData() {
-        return imageData;
-    }
+    public byte[] getImageData() { return imageData; }
 
-    public void setImageData(byte[] imageData) {
-        this.imageData = imageData;
-    }
+    public void setImageData(byte[] imageData) { this.imageData = imageData; }
 
-    // hashCode & equals based on id
+    public Set<Role> getRoles() { return roles; }
+
+    public void setRoles(Set<Role> roles) { this.roles = roles; }
+
+    // equals, hashCode, toString
     @Override
     public int hashCode() {
         return Objects.hash(id);
@@ -101,7 +90,6 @@ public class User implements Serializable {
         return Objects.equals(id, other.id);
     }
 
-    // Optional: toString()
     @Override
     public String toString() {
         return "User{" +
@@ -111,6 +99,7 @@ public class User implements Serializable {
                 ", posisi='" + posisi + '\'' +
                 ", status='" + status + '\'' +
                 ", imageData=" + (imageData != null ? imageData.length + " bytes" : "null") +
+                ", roles=" + roles +
                 '}';
     }
 }

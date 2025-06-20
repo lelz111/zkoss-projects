@@ -34,11 +34,18 @@
     <!-- Initiate bean for Flyway -->
     <bean id="flyway" class="org.flywaydb.core.Flyway" init-method="migrate" depends-on="dataSource">
         <property name="dataSource" ref="dataSource" />
-        <property name="BaselineOnMigrate" value="true" />
+        <property name="baselineOnMigrate" value="true" />
+        <property name="baselineVersion">
+            <bean class="org.flywaydb.core.api.MigrationVersion" factory-method="fromVersion">
+                <constructor-arg value="0" />
+            </bean>
+        </property>
         <property name="locations">
             <list>
                 <value>classpath:db/migration</value>
             </list>
         </property>
     </bean>
+
+
 </beans>

@@ -1,0 +1,29 @@
+-- Buat tabel roles
+CREATE TABLE IF NOT EXISTS roles (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(100) NOT NULL UNIQUE
+);
+
+-- Buat tabel relasi user dan role
+CREATE TABLE IF NOT EXISTS user_roles (
+    user_id BIGINT NOT NULL,
+    role_id BIGINT NOT NULL,
+    PRIMARY KEY (user_id, role_id),
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (role_id) REFERENCES roles(id) ON DELETE CASCADE
+);
+
+-- Insert role default
+INSERT INTO roles (name) VALUES
+('ADMIN'),
+('USER');
+
+-- Contoh: Assign ROLE_ADMIN ke user dengan id 1, dan ROLE_USER ke id 2 & 3
+-- Pastikan ID user sesuai dengan yang ada di tabel `users`
+INSERT INTO user_roles (user_id, role_id)
+SELECT u.id, r.id FROM users u, roles r
+WHERE u.npk = '1001' AND r.name = 'ADMIN';
+
+INSERT INTO user_roles (user_id, role_id)
+SELECT u.id, r.id FROM users u, roles r
+WHERE u.npk IN ('1002', '1003') AND r.name = 'USER';
